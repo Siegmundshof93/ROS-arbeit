@@ -1,14 +1,31 @@
 #!/bin/bash
-#input=" in/0x0087_0x0000001600097095827"
+#############################################creating a time file#############################
 FILES=/home/pvl/ROS/decor_result/in/*
 for f in $FILES
 do
-#echo "processed $f"
+
+ls --full-time $f
+
+
+
+
+done > time_decor.csv
+
+#############################################creating a decor file#########################
+
+
+for f in $FILES
+do
+
    xxd -u $f
 
 
 
-   #$f > data.txt
+
 done > data.csv
-#xxd in/0x0087_0x000000160009709582
+
+###########################################python execution################################
+
+python3 py_time.py
+
 python3 decor.py
