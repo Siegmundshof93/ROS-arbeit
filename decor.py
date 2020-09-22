@@ -73,30 +73,29 @@ Fourth_value = Fourth_value.apply(lambda Fourth_value: int(Fourth_value, 16))
 
 
 df_first = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv")
-df_first["Value of the first camera"] = ""
+df_first["скорость счета 1 канала"] = ""
 df_first.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv", index=False)
 df_first = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv")
-df_first["Value of the first camera"] = First_value
+df_first["скорость счета 1 канала"] = First_value
 df_first.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv", index=False)
 
-
 df_second = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv")
-df_second["Value of the second camera"] = ""
+df_second["скорость счета 2 канала"] = ""
 df_second.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv", index=False)
 df_second = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv")
-df_second["Value of the second camera"] = Second_value
+df_second["скорость счета 2 канала"] = Second_value
 df_second.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv", index=False)
 
 df_third = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv")
-df_third["Value of the third camera"] = ""
+df_third["скорость счета 3 канала"] = ""
 df_third.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv", index=False)
 df_third = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv")
-df_third["Value of the third camera"] = Third_value
+df_third["скорость счета 3 канала"] = Third_value
 df_third.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv", index=False)
 
 df_fourth = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv")
-df_fourth["Value of the fourth camera"] = ""
+df_fourth["суммарная скорость счета"] = ""
 df_fourth.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv", index=False)
 df_fourth = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv")
-df_fourth["Value of the fourth camera"] = Fourth_value
+df_fourth["суммарная скорость счета"] = Fourth_value
 df_fourth.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data_output.csv", index=False)
