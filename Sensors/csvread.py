@@ -1,18 +1,11 @@
-import tkinter as tk
+
 import csv
 import numpy as np
 import pandas as pd
-import numpy as np
 import time
 import datetime
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
-from sklearn.linear_model import LinearRegression
 from tkinter import filedialog
 from tkinter import simpledialog
-from scipy.signal import lfilter
-import sys
-import pickle
 
 
 """
@@ -30,6 +23,7 @@ telem_ID = df.loc[telem1['A'].str[8] == "8"]
 
 t   = telem_ID.iloc[:, 0].values.reshape(-1, 1) # Time, first collumn
 telem = telem_ID.iloc[:, 42].values.reshape(-1, 1)
+temp = telem_ID.iloc[:, 38].values.reshape(-1, 1)
 
 #convertation to human readable time
 timeUtc = np.array(t/1000)
@@ -44,6 +38,43 @@ dataframe.to_csv("sensors_output.csv", index=False)
 telem = pd.DataFrame(telem)
 telem.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/ignore_1.csv", index=False)
 telem = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/ignore_1.csv", delimiter=' ', skiprows=1)
+
+
+
+#Temperature sensor###############################################################
+
+vhex = np.vectorize(hex)
+temp = vhex(temp)
+
+temp = pd.DataFrame(temp)
+temp.columns = ["Temp"]
+temp["Temp"] = temp["Temp"].str[2:]
+
+tempMSB = temp["Temp"].str[:-3]
+tempLSB = temp["Temp"].str[2:]
+
+
+t = tempLSB + tempMSB
+
+for k in range(len(t)):
+    if t[k] == '':
+        t[k] = "ffff"
+
+
+
+
+t = t.apply(lambda t: int(t, 16))
+
+term_ = t * 0.0625
+
+term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
+term_["Temperature sensor"] = ""
+term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", index=False)
+term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
+term_["Temperature sensor"] = term_
+term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", index=False)
+
+
 
 ################################################accelerometer
 
