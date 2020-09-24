@@ -15,18 +15,18 @@ title='Select telemetry'
 """
 
 
-df = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/2020.09.17_13.50.18_log.csv", delimiter=';', index_col=False, skiprows=1) # Read csv file
+df = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Pasha.csv", delimiter=';', index_col=False, skiprows=1) # Read csv file
 
 #Choosing only rows with the ID683D
 telem1 = pd.DataFrame({'A': df.iloc[:,42]})
 telem_ID = df.loc[telem1['A'].str[8] == "8"]
 
-t   = telem_ID.iloc[:, 0].values.reshape(-1, 1) # Time, first collumn
+t   = telem_ID.iloc[:, 33].values.reshape(-1, 1) # Time, first collumn
 telem = telem_ID.iloc[:, 42].values.reshape(-1, 1)
 temp = telem_ID.iloc[:, 38].values.reshape(-1, 1)
 
 #convertation to human readable time
-timeUtc = np.array(t/1000)
+timeUtc = np.array(t)
 time = np.asarray(timeUtc, dtype='datetime64[s]')
 
 dataframe=pd.DataFrame(time)
@@ -61,6 +61,18 @@ accz = accz2 + accz1
 accx = accx.apply(lambda accx: int(accx, 16))
 accy = accy.apply(lambda accy: int(accy, 16))
 accz = accz.apply(lambda accz: int(accz, 16))
+
+for k in range(len(accx)):
+    if accx[k] > 32768:
+        accx[k] = -32768 * 2 + accx[k]
+
+for k in range(len(accy)):
+     if accy[k] > 32768:
+         accy[k] = -32768 * 2 + accy[k]
+
+for k in range(len(accz)):
+    if accz[k] > 32768:
+        accz[k] = -32768 * 2 + accz[k]
 
 accx = accx * 4 / 32768
 accy = accy * 4 / 32768
@@ -106,6 +118,18 @@ gyrz = gyrz2 + gyrz1
 gyrx = gyrx.apply(lambda gyrx: int(gyrx, 16))
 gyry = gyry.apply(lambda gyry: int(gyry, 16))
 gyrz = gyrz.apply(lambda gyrz: int(gyrz, 16))
+
+for k in range(len(gyrx)):
+    if gyrx[k] > 32768:
+        gyrx[k] = -32768 * 2 + gyrx[k]
+
+for k in range(len(gyry)):
+     if gyry[k] > 32768:
+         gyry[k] = -32768 * 2 + gyry[k]
+
+for k in range(len(gyrz)):
+    if gyrz[k] > 32768:
+        gyrz[k] = -32768 * 2 + gyrz[k]
 
 gyrx = gyrx * 2000 / 32768
 gyry = gyry * 2000 / 32768
@@ -154,6 +178,18 @@ magx = magx.apply(lambda magx: int(magx, 16))
 magy = magy.apply(lambda magy: int(magy, 16))
 magz = magz.apply(lambda magz: int(magz, 16))
 
+for k in range(len(magz)):
+    if magx[k] > 32768:
+        magx[k] = -32768 * 2 + magx[k]
+
+for k in range(len(magy)):
+     if magy[k] > 32768:
+         magy[k] = -32768 * 2 + magy[k]
+
+for k in range(len(magz)):
+    if magz[k] > 32768:
+        magz[k] = -32768 * 2 + magz[k]
+
 magx = magx * 400 / 32768
 magy = magy * 400 / 32768
 magz = magz * 400 / 32768
@@ -197,7 +233,7 @@ t = tempLSB + tempMSB
 
 for k in range(len(t)):
     if t[k] == '':
-        t[k] = "ffff"
+        t[k] = "0"
 
 
 
