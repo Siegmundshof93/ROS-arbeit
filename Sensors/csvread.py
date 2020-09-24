@@ -41,41 +41,6 @@ telem = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/ignore_1.csv"
 
 
 
-#Temperature sensor###############################################################
-
-vhex = np.vectorize(hex)
-temp = vhex(temp)
-
-temp = pd.DataFrame(temp)
-temp.columns = ["Temp"]
-temp["Temp"] = temp["Temp"].str[2:]
-
-tempMSB = temp["Temp"].str[:-3]
-tempLSB = temp["Temp"].str[2:]
-
-
-t = tempLSB + tempMSB
-
-for k in range(len(t)):
-    if t[k] == '':
-        t[k] = "ffff"
-
-
-
-
-t = t.apply(lambda t: int(t, 16))
-
-term_ = t * 0.0625
-
-term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
-term_["Temperature sensor"] = ""
-term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", index=False)
-term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
-term_["Temperature sensor"] = term_
-term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", index=False)
-
-
-
 ################################################accelerometer
 
 #x axis
@@ -213,3 +178,42 @@ maz.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", i
 maz = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
 maz["Magnetometer Z axis"] = magz
 maz.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", index=False)
+
+
+#Temperature sensor###############################################################
+
+vhex = np.vectorize(hex)
+temp = vhex(temp)
+
+temp = pd.DataFrame(temp)
+temp.columns = ["Temp"]
+temp["Temp"] = temp["Temp"].str[2:]
+
+tempMSB = temp["Temp"].str[:-3]
+tempLSB = temp["Temp"].str[2:]
+
+
+t = tempLSB + tempMSB
+
+for k in range(len(t)):
+    if t[k] == '':
+        t[k] = "ffff"
+
+
+
+
+t = t.apply(lambda t: int(t, 16))
+
+#term_ = t * 0.0625
+#term_ = term_.astype(str)
+
+#print(term_)
+#term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/ignore_2.csv", index=False)
+#term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/ignore_2.csv")
+
+term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
+term_["Temperature sensor"] = ""
+term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", index=False)
+term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
+term_["Temperature sensor"] = t * 0.0625
+term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", index=False)
