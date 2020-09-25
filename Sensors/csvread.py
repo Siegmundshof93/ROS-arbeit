@@ -21,7 +21,7 @@ df = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Pasha.csv", deli
 telem1 = pd.DataFrame({'A': df.iloc[:,42]})
 telem_ID = df.loc[telem1['A'].str[8] == "8"]
 
-t   = telem_ID.iloc[:, 33].values.reshape(-1, 1) # Time, first collumn
+t   = telem_ID.iloc[: - 1, 33].values.reshape(-1, 1) # Time, first collumn
 telem = telem_ID.iloc[:, 42].values.reshape(-1, 1)
 temp = telem_ID.iloc[:, 38].values.reshape(-1, 1)
 
@@ -231,6 +231,8 @@ tempLSB = temp["Temp"].str[2:]
 
 t = tempLSB + tempMSB
 
+
+
 for k in range(len(t)):
     if t[k] == '':
         t[k] = "0"
@@ -240,7 +242,10 @@ for k in range(len(t)):
 
 t = t.apply(lambda t: int(t, 16))
 
+#print(t[151])
+
 #term_ = t * 0.0625
+#print(term_[151])
 #term_ = term_.astype(str)
 
 #print(term_)
@@ -251,5 +256,5 @@ term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_outpu
 term_["Temperature sensor"] = ""
 term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", index=False)
 term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
-term_["Temperature sensor"] = t * 0.0625
+term_["Temperature sensor"] = t * 0.062501
 term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", index=False)
