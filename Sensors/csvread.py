@@ -1,4 +1,3 @@
-
 import csv
 import numpy as np
 import pandas as pd
@@ -8,14 +7,13 @@ from tkinter import filedialog
 from tkinter import simpledialog
 
 
-"""
 file_path = filedialog.askopenfile(initialdir='/home/pvl/ROS/',
 title='Select telemetry'
 ).name #dialog window, for manual telemetry search
-"""
 
 
-df = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Pasha.csv", delimiter=';', index_col=False, skiprows=1) # Read csv file
+
+df = pd.read_csv(file_path, delimiter=';', index_col=False, skiprows=1) # Read csv file
 
 #Choosing only rows with the ID683D
 telem1 = pd.DataFrame({'A': df.iloc[:,42]})
@@ -74,9 +72,9 @@ for k in range(len(accz)):
     if accz[k] > 32768:
         accz[k] = -32768 * 2 + accz[k]
 
-accx = accx * 4 / 32768
-accy = accy * 4 / 32768
-accz = accz * 4 / 32768
+accx = accx * 2 / 32768
+accy = accy * 2 / 32768
+accz = accz * 2 / 32768
 
 
 acx = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
@@ -131,9 +129,9 @@ for k in range(len(gyrz)):
     if gyrz[k] > 32768:
         gyrz[k] = -32768 * 2 + gyrz[k]
 
-gyrx = gyrx * 2000 / 32768
-gyry = gyry * 2000 / 32768
-gyrz = gyrz * 2000 / 32768
+gyrx = ((gyrx * 2000 / 32768) / 8 ) + 1
+gyry = ((gyry * 2000 / 32768) / 8 ) - 3
+gyrz = ((gyrz * 2000 / 32768) / 8 ) + 2
 
 gyx = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
 gyx["Gyro X axis"] = ""
@@ -190,9 +188,9 @@ for k in range(len(magz)):
     if magz[k] > 32768:
         magz[k] = -32768 * 2 + magz[k]
 
-magx = magx * 400 / 32768
-magy = magy * 400 / 32768
-magz = magz * 400 / 32768
+magx = magx * 400 / 32768 / 90
+magy = magy * 400 / 32768 / 90
+magz = magz * 400 / 32768 / 90
 
 max = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv")
 max["Magnetometer X axis"] = ""
