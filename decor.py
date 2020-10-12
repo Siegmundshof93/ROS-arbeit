@@ -6,7 +6,7 @@ import re
 import pickle
 
 #read the csv file
-df = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data.csv", delimiter=":", engine="python")
+df = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/ignore__2.csv", delimiter=":", engine="python")
 
 # extracting the decor measurements for four cameras "#### #### #### #### "
 
@@ -28,13 +28,13 @@ res1 = pickle.loads(res) #take a value
 
 #save into the data1.csv
 
-np.savetxt('data1.csv', (res1), fmt='%s')
+np.savetxt('ignore__3.csv', (res1), fmt='%s')
 
 #give the "names" for columns
 colnames={' ', '  ', '   ', '    '}
 
 #read the csv file as string
-df1 = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/data1.csv", dtype = str, names=colnames, delimiter=" ")
+df1 = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/ignore__3.csv", dtype = str, names=colnames, delimiter=" ")
 
 #values of the columns
 x1 = df1.iloc[:, 0]

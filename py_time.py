@@ -6,7 +6,7 @@ import pandas as pd
 
 colnames=['Time']
 
-df = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/time_decor.csv", names=colnames, header=None)
+df = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/ignore__1.csv", names=colnames, header=None)
 
 #df["Time"] = df
 
