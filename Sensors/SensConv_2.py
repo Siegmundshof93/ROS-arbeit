@@ -5,7 +5,7 @@ import time
 import datetime
 from tkinter import filedialog
 from tkinter import simpledialog
-
+import os
 
 file_path = filedialog.askopenfile(initialdir='/home/pvl/ROS/',
 title='Select telemetry'
@@ -19,7 +19,7 @@ df = pd.read_csv(file_path, delimiter=';', index_col=False, skiprows=1) # Read c
 telem1 = pd.DataFrame({'A': df.iloc[:,42]})
 telem_ID = df.loc[telem1['A'].str[8] == "8"]
 
-t   = telem_ID.iloc[: - 1, 33].values.reshape(-1, 1) # Time, first collumn
+t = telem_ID.iloc[: - 1, 33].values.reshape(-1, 1) # Time, first collumn
 telem = telem_ID.iloc[:, 42].values.reshape(-1, 1)
 temp = telem_ID.iloc[:, 38].values.reshape(-1, 1)
 
@@ -29,13 +29,13 @@ time = np.asarray(timeUtc, dtype='datetime64[s]')
 
 dataframe=pd.DataFrame(time)
 
-dataframe.to_csv("sensors_output.csv", index=False)
+dataframe.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
 
 
 
 telem = pd.DataFrame(telem)
-telem.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/ignore_1.csv", index=False)
-telem = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/ignore_1.csv", delimiter=' ', skiprows=1)
+telem.to_csv("/home/pvl/Schreibtisch/ignore_1.csv", index=False)
+telem = pd.read_csv("/home/pvl/Schreibtisch/ignore_1.csv", delimiter=' ', skiprows=1)
 
 
 
@@ -77,26 +77,26 @@ accy = accy * 2 / 32768
 accz = accz * 2 / 32768
 
 
-acx = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+acx = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 acx["Accelerometer X axis"] = ""
-acx.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
-acx = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+acx.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+acx = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 acx["Accelerometer X axis"] = accx
-acx.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
+acx.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
 
-acy = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+acy = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 acy["Accelerometer Y axis"] = ""
-acy.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/sensors_output.csv", index=False)
-acy = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+acy.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+acy = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 acy["Accelerometer Y axis"] = accy
-acy.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
+acy.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
 
-acz = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+acz = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 acz["Accelerometer Z axis"] = ""
-acz.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
-acz = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+acz.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+acz = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 acz["Accelerometer Z axis"] = accz
-acz.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
+acz.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
 
 ##############################################gyro
 
@@ -129,30 +129,30 @@ for k in range(len(gyrz)):
     if gyrz[k] > 32768:
         gyrz[k] = -32768 * 2 + gyrz[k]
 
-gyrx = ((gyrx * 2000 / 32768) / 8 ) + 1
-gyry = ((gyry * 2000 / 32768) / 8 ) - 3
-gyrz = ((gyrz * 2000 / 32768) / 8 ) + 2
+gyrx = ((gyrx * 2000 / 32768) / 26) - 5.3
+gyry = ((gyry * 2000 / 32768) / 10 )  - 3.5
+gyrz = ((gyrz * 2000 / 32768) / 7 ) + 1
 
-gyx = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+gyx = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 gyx["Gyro X axis"] = ""
-gyx.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
-gyx = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+gyx.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+gyx = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 gyx["Gyro X axis"] = gyrx
-gyx.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
+gyx.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
 
-gyy = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+gyy = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 gyy["Gyro Y axis"] = ""
-gyy.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
-gyy = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+gyy.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+gyy = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 gyy["Gyro Y axis"] = gyry
-gyy.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
+gyy.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
 
-gyz = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+gyz = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 gyz["Gyro Z axis"] = ""
-gyz.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
-gyz = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+gyz.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+gyz = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 gyz["Gyro Z axis"] = gyrz
-gyz.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
+gyz.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
 
 #####################################magnetometer
 
@@ -192,26 +192,26 @@ magx = magx * 400 / 32768 / 90
 magy = magy * 400 / 32768 / 90
 magz = magz * 400 / 32768 / 90
 
-max = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+max = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 max["Magnetometer X axis"] = ""
-max.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
-max = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+max.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+max = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 max["Magnetometer X axis"] = magx
-max.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
+max.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
 
-may = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+may = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 may["Magnetometer Y axis"] = ""
-may.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
-may = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+may.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+may = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 may["Magnetometer Y axis"] = magy
-may.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
+may.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
 
-maz = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+maz = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 maz["Magnetometer Z axis"] = ""
-maz.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
-maz = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+maz.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+maz = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 maz["Magnetometer Z axis"] = magz
-maz.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
+maz.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
 
 
 #Temperature sensor###############################################################
@@ -250,9 +250,10 @@ t = t.apply(lambda t: int(t, 16))
 #term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/ignore_2.csv", index=False)
 #term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/ignore_2.csv")
 
-term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+term_ = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 term_["Temperature sensor"] = ""
-term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
-term_ = pd.read_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv")
+term_.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+term_ = pd.read_csv("/home/pvl/Schreibtisch/sensors_output_2.csv")
 term_["Temperature sensor"] = t * 0.062501
-term_.to_csv("/home/pvl/ROS/decor_result/ROS-arbeit/Sensors/Die_Erste/sensors_output.csv", index=False)
+term_.to_csv("/home/pvl/Schreibtisch/sensors_output_2.csv", index=False)
+os.remove('/home/pvl/Schreibtisch/ignore_1.csv')
